@@ -7,7 +7,7 @@ test('boots the portrait title screen without console errors', async ({ page }) 
   });
   page.on('pageerror', (error) => errors.push(error.message));
 
-  await page.goto('./');
+  await page.goto('/');
   await expect(page.locator('canvas')).toBeVisible();
   await expect
     .poll(() => page.evaluate(() => Boolean(window.__pramPanicGame?.isRunning)))

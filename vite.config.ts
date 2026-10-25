@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig({
-  base: '/prampanic/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/prampanic/' : '/',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -23,4 +23,4 @@ export default defineConfig({
     })
   ],
   test: { environment: 'node', include: ['tests/unit/**/*.test.ts'] }
-});
+}));
