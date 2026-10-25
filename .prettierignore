@@ -7,3 +7,4 @@ docs/
 CLAUDE.md
 KICKOFF_PROMPT.md
 public/vendor/
+src/scenes/FirstWalkScene.ts
