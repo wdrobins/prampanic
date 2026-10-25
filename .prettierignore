@@ -6,3 +6,4 @@ test-results/
 docs/
 CLAUDE.md
 KICKOFF_PROMPT.md
+public/vendor/
