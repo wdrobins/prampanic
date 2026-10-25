@@ -12,6 +12,7 @@ export class FirstWalkScene extends Phaser.Scene {
   private shushAt = 0;
   private hud!: Phaser.GameObjects.Text;
   private stateText!: Phaser.GameObjects.Text;
+  private keys?: Record<string, Phaser.Input.Keyboard.Key>;
 
   public constructor() { super('first-walk'); }
 
@@ -35,6 +36,7 @@ export class FirstWalkScene extends Phaser.Scene {
     ].forEach(([x, y, label]) => this.addHazard(x as number, y as number, label as string));
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => { if (p.isDown && p.x < 195) this.pram.x = Phaser.Math.Clamp(p.x * 2, 55, 335); });
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => { if (p.x >= 195) this.shush(); });
+    this.keys = this.input.keyboard?.addKeys('A,D,S') as Record<string, Phaser.Input.Keyboard.Key> | undefined;
     this.input.keyboard?.on('keydown-A', () => (this.pram.x -= 35));
     this.input.keyboard?.on('keydown-D', () => (this.pram.x += 35));
     this.input.keyboard?.on('keydown-SPACE', () => this.shush());
@@ -44,7 +46,7 @@ export class FirstWalkScene extends Phaser.Scene {
 
   public update(_: number, deltaMs: number): void {
     const dt = deltaMs / 1000;
-    const keys = this.input.keyboard?.addKeys('A,D,S') as Record<string, Phaser.Input.Keyboard.Key> | undefined;
+    const keys = this.keys;
     if (keys?.A.isDown) this.pram.x -= TUNING.steerSpeed * dt;
     if (keys?.D.isDown) this.pram.x += TUNING.steerSpeed * dt;
     this.pram.x = Phaser.Math.Clamp(this.pram.x, 55, 335);
