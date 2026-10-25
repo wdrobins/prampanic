@@ -50,7 +50,7 @@ export class TitleScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     start.on('pointerdown', () => {
-      start.setText('COMING SOON!');
+      this.scene.start('first-walk');
     });
 
     this.add

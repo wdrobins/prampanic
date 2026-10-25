@@ -6,13 +6,13 @@ build around them with placeholders and keep going.
 
 ## M0 — Scaffold and pipeline
 
-- [ ] Vite + TypeScript (strict) + Phaser 3 project; folder layout per `docs/TECH.md`
-- [ ] ESLint, Prettier, Vitest, Playwright configured; `npm` scripts per `CLAUDE.md`
-- [ ] `src/config/tuning.ts` with the starting values from `docs/TECH.md`
-- [ ] Portrait 9:16 scaling (FIT, centred), works from 360×640 up to desktop
-- [ ] PWA manifest + service worker; placeholder icon
-- [ ] GitHub Actions: lint → test → build → deploy to GitHub Pages
-- [ ] README with how to run locally and open on a phone over LAN
+- [x] Vite + TypeScript (strict) + Phaser 3 project; folder layout per `docs/TECH.md`
+- [x] ESLint, Prettier, Vitest, Playwright configured; `npm` scripts per `CLAUDE.md`
+- [x] `src/config/tuning.ts` with the starting values from `docs/TECH.md`
+- [x] Portrait 9:16 scaling (FIT, centred), works from 360×640 up to desktop
+- [x] PWA manifest + service worker; placeholder icon
+- [x] GitHub Actions: lint → test → build → deploy to GitHub Pages
+- [x] README with how to run locally and open on a phone over LAN
 
 **Done when:** a "Pram Panic" title screen is live on GitHub Pages and installable on a phone.
 

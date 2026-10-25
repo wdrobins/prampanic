@@ -1,6 +1,7 @@
 import { PALETTE } from './art/palette';
 import { BootScene } from './scenes/BootScene';
 import { TitleScene } from './scenes/TitleScene';
+import { FirstWalkScene } from './scenes/FirstWalkScene';
 import './style.css';
 
 const game = new Phaser.Game({
@@ -15,7 +16,7 @@ const game = new Phaser.Game({
     width: 390,
     height: 844
   },
-  scene: [BootScene, TitleScene]
+  scene: [BootScene, TitleScene, FirstWalkScene]
 });
 
 window.__pramPanicGame = game;

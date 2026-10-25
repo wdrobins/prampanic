@@ -13,5 +13,9 @@ test('boots the portrait title screen without console errors', async ({ page }) 
     .poll(() => page.evaluate(() => Boolean(window.__pramPanicGame?.isRunning)))
     .toBe(true);
   await expect(page.locator('canvas')).toHaveAttribute('width', '390');
+  await page.locator('canvas').click({ position: { x: 195, y: 650 } });
+  await expect
+    .poll(() => page.evaluate(() => window.__pramPanicGame?.scene.isActive('first-walk')))
+    .toBe(true);
   expect(errors).toEqual([]);
 });
