@@ -1,0 +1,23 @@
+:root {
+  background: #1b1b1f;
+  color: #fff8e7;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app,
+#game {
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+#game canvas {
+  display: block;
+}

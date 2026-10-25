@@ -1,0 +1,9 @@
+export class BootScene extends Phaser.Scene {
+  public constructor() {
+    super('boot');
+  }
+
+  public create(): void {
+    this.scene.start('title');
+  }
+}
