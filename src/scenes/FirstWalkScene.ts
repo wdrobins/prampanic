@@ -9,8 +9,8 @@ type Hazard = { box: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Tex
 export class FirstWalkScene extends Phaser.Scene {
   private pram!: Phaser.GameObjects.Container;
   private hazards: Hazard[] = [];
-  private sleep = TUNING.meter.max;
-  private feed = TUNING.feedClock.defaultSeconds;
+  private sleep: number = TUNING.meter.max;
+  private feed: number = TUNING.feedClock.defaultSeconds;
   private smooth = false;
   private shushAt = 0;
   private hud!: Phaser.GameObjects.Text;

@@ -7,8 +7,8 @@ export class TitleScene extends Phaser.Scene {
   private walking = false;
   private pram?: Phaser.GameObjects.Container;
   private hazards: Phaser.GameObjects.Rectangle[] = [];
-  private sleep = TUNING.meter.max;
-  private feed = TUNING.feedClock.defaultSeconds;
+  private sleep: number = TUNING.meter.max;
+  private feed: number = TUNING.feedClock.defaultSeconds;
   private frameCount = 0;
   private hud?: Phaser.GameObjects.Text;
 
