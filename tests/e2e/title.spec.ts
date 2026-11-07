@@ -54,8 +54,10 @@ test.describe('First Walk player path', () => {
     const errors = captureConsoleErrors(page);
 
     await startCanonicalFirstWalk(page);
+    // The first pothole is a gentle warning; the next kerb proves a real collision
+    // takes Lulu below the configured Stirring threshold on the player route.
     await expect(page.getByTestId('first-walk-hud')).toContainText('LULU: Stirring', {
-      timeout: 7_000
+      timeout: 14_000
     });
     expect(errors).toEqual([]);
   });
