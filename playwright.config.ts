@@ -12,5 +12,13 @@ export default defineConfig({
     url: 'http://127.0.0.1:4173/',
     reuseExistingServer: true
   },
-  projects: [{ name: 'chromium-phone', use: { ...devices['Pixel 5'] } }]
+  projects: [
+    {
+      name: 'chromium-phone',
+      use: {
+        ...devices['Pixel 5'],
+        viewport: { width: 390, height: 844 }
+      }
+    }
+  ]
 });
