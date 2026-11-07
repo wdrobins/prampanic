@@ -18,6 +18,120 @@ body,
   overflow: hidden;
 }
 
+#game {
+  position: relative;
+}
+
 #game canvas {
   display: block;
+}
+
+.game-dom-overlay {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.game-dom-button {
+  border: 3px solid #1b1b1f;
+  border-radius: 14px;
+  box-shadow: 0 4px 0 #1b1b1f;
+  color: #1b1b1f;
+  cursor: pointer;
+  font:
+    bold 14px Arial,
+    sans-serif;
+  min-height: 44px;
+  pointer-events: auto;
+}
+
+.title-start {
+  background: #ffc93c;
+  bottom: 18%;
+  left: 50%;
+  min-width: 230px;
+  padding: 14px 18px;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.first-walk-a11y {
+  pointer-events: none;
+}
+
+.first-walk-a11y button[data-testid] {
+  pointer-events: auto;
+}
+
+.first-walk-hud-copy {
+  left: 16px;
+  position: absolute;
+  top: 18px;
+}
+
+.touch-control {
+  background: #fff8e7;
+  bottom: 20px;
+  height: 64px;
+  position: absolute;
+  width: 64px;
+}
+
+.touch-control.left {
+  left: 16px;
+}
+
+.touch-control.right {
+  left: 92px;
+}
+
+.shush-accessible {
+  background: #ffc93c;
+  bottom: 62px;
+  height: 76px;
+  position: absolute;
+  right: 16px;
+  width: 76px;
+}
+
+.pause-accessible {
+  background: #fff8e7;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.e2e-finish {
+  background: #fff8e7;
+  bottom: 8px;
+  font-size: 10px;
+  min-height: 30px;
+  position: absolute;
+  right: 8px;
+}
+
+.e2e-finish + .e2e-finish {
+  right: 96px;
+}
+
+.result-dom-card {
+  background: #fff8e7;
+  border: 4px solid #1b1b1f;
+  border-radius: 18px;
+  color: #1b1b1f;
+  left: 50%;
+  padding: 24px 20px;
+  pointer-events: auto;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(342px, calc(100% - 32px));
+}
+
+.result-dom-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
 }

@@ -21,6 +21,43 @@ export const TUNING = {
   settle: { seconds: 10, beatsRequired: 8, windowMs: 220 },
   hood: { shadeSeconds: 10 },
   feedClock: { defaultSeconds: 90 },
+  firstWalk: {
+    screen: { width: 390, height: 844, pathWidth: 310, pramY: 646, routeTop: 112 },
+    frame: { maxDeltaMs: 50, routeRenderDistance: 920 },
+    pram: { minX: 54, maxX: 336, width: 88, height: 44, hoodRadius: 28, wheelRadius: 10 },
+    bill: { torsoWidth: 42, torsoHeight: 48, headRadius: 18, eyeRadius: 5, yOffset: 62 },
+    lulu: { headRadius: 16, bodyWidth: 26, bodyHeight: 24, eyeRadius: 4, yOffset: -12 },
+    hazard: { width: 58, height: 42, collisionX: 52, collisionY: 48, sunDrainMultiplier: 1 },
+    pickup: { width: 54, height: 30, collisionX: 50, collisionY: 44 },
+    hud: {
+      padding: 16,
+      top: 18,
+      shushX: 336,
+      shushY: 744,
+      shushDiameter: 76,
+      pauseX: 343,
+      pauseY: 42,
+      controlWidth: 62,
+      controlHeight: 38
+    },
+    results: {
+      x: 195,
+      y: 422,
+      width: 342,
+      height: 484,
+      actionWidth: 128,
+      actionHeight: 52,
+      actionGap: 74
+    },
+    feedback: {
+      bumpDurationMs: 80,
+      bumpStrength: 0.006,
+      shushDurationMs: 120,
+      successDurationMs: 180
+    },
+    animation: { wobbleFrequency: 8, collisionWobbleRadians: 0.08, cruiseWobbleRadians: 0.015 },
+    dom: { controlSizePx: 64, controlGapPx: 12 }
+  },
   economy: {
     bottleFull: 1,
     bottleHalf: 0.5,
