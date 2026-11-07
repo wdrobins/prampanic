@@ -1,0 +1,208 @@
+{
+  "sounds": [
+    {
+      "id": "lulu_sleep_snore",
+      "files": ["lulu_sleep_snore"],
+      "loop": true,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "lulu_stir_sigh",
+      "files": ["lulu_stir_sigh_1", "lulu_stir_sigh_2", "lulu_stir_sigh_3"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "lulu_grunt",
+      "files": ["lulu_grunt_1", "lulu_grunt_2", "lulu_grunt_3", "lulu_grunt_4"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "lulu_whimper",
+      "files": ["lulu_whimper"],
+      "loop": true,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "lulu_cry_wail",
+      "files": ["lulu_cry_wail"],
+      "loop": true,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "lulu_sniff",
+      "files": ["lulu_sniff_1", "lulu_sniff_2"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "lulu_yawn",
+      "files": ["lulu_yawn"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "lulu_giggle",
+      "files": ["lulu_giggle_1", "lulu_giggle_2"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "bill_shhh",
+      "files": ["bill_shhh_1", "bill_shhh_2", "bill_shhh_3"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "bill_nonono",
+      "files": ["bill_nonono"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "bill_phew",
+      "files": ["bill_phew"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "bill_sigh_defeat",
+      "files": ["bill_sigh_defeat"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "bill_victory",
+      "files": ["bill_victory"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "bill_yawn",
+      "files": ["bill_yawn"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    { "id": "cough", "files": ["cough"], "loop": false, "placeholder": { "recipe": "noise" } },
+    { "id": "sneeze", "files": ["sneeze"], "loop": false, "placeholder": { "recipe": "noise" } },
+    {
+      "id": "magpie_swoop",
+      "files": ["magpie_swoop"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "sprinkler",
+      "files": ["sprinkler"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "bin_bump",
+      "files": ["bin_bump"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "pothole_thud",
+      "files": ["pothole_thud"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "kerb_jolt",
+      "files": ["kerb_jolt"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    { "id": "car_horn", "files": ["car_horn"], "loop": false, "placeholder": { "recipe": "tone" } },
+    {
+      "id": "dog_bark",
+      "files": ["dog_bark"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "squeaky_toy",
+      "files": ["squeaky_toy"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "floor_creak",
+      "files": ["floor_creak"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "door_knock",
+      "files": ["door_knock"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "saucepan_avalanche",
+      "files": ["saucepan_avalanche"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "pub_crowd",
+      "files": ["pub_crowd"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    {
+      "id": "duck_quack",
+      "files": ["duck_quack"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "fountain",
+      "files": ["fountain"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    { "id": "doorbell", "files": ["doorbell"], "loop": false, "placeholder": { "recipe": "tone" } },
+    {
+      "id": "balloon_pop",
+      "files": ["balloon_pop"],
+      "loop": false,
+      "placeholder": { "recipe": "noise" }
+    },
+    { "id": "ui_tap", "files": ["ui_tap"], "loop": false, "placeholder": { "recipe": "tone" } },
+    { "id": "ui_coin", "files": ["ui_coin"], "loop": false, "placeholder": { "recipe": "tone" } },
+    {
+      "id": "ui_unlock",
+      "files": ["ui_unlock"],
+      "loop": false,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "music_lullaby",
+      "files": ["music_lullaby"],
+      "loop": true,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "music_lullaby_detuned",
+      "files": ["music_lullaby_detuned"],
+      "loop": true,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "music_menu",
+      "files": ["music_menu"],
+      "loop": true,
+      "placeholder": { "recipe": "tone" }
+    },
+    {
+      "id": "music_night",
+      "files": ["music_night"],
+      "loop": true,
+      "placeholder": { "recipe": "tone" }
+    }
+  ]
+}

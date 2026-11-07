@@ -5,6 +5,7 @@ export const TUNING = {
   meter: {
     max: 100,
     thresholds: { stirring: 70, grunting: 45, awake: 20, crying: 0 },
+    hysteresisRecoveryThresholds: { sleeping: 85, stirring: 65, grunting: 40, awake: 15 },
     recoverPerSecSmooth: 2.0,
     recoverPerSecShade: 1.5,
     hysteresisRecoverFactor: 0.5,
@@ -15,6 +16,7 @@ export const TUNING = {
     sniffles: { seconds: 5, drainPerSec: 2.0 }
   },
   shush: { cooldownSec: 6, recover: 12, cueBonusMultiplier: 2 },
+  collision: { graceSeconds: 0.25 },
   peek: { seconds: 1.0, attentionCostSec: 0.5 },
   settle: { seconds: 10, beatsRequired: 8, windowMs: 220 },
   hood: { shadeSeconds: 10 },

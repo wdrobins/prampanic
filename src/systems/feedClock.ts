@@ -1,10 +1,21 @@
+import { TUNING } from '../config/tuning';
+
 export interface FeedClock {
   remaining: number;
   expired: boolean;
 }
 
+export const createFeedClock = (seconds: number = TUNING.feedClock.defaultSeconds): FeedClock => ({
+  remaining: Math.max(0, seconds),
+  expired: seconds <= 0
+});
+
+export const resetFeedClock = (seconds: number = TUNING.feedClock.defaultSeconds): FeedClock =>
+  createFeedClock(seconds);
+
 export const tickFeedClock = (clock: FeedClock, seconds: number): FeedClock => {
-  const remaining = Math.max(0, clock.remaining - seconds);
+  if (clock.expired) return clock;
+  const remaining = Math.max(0, clock.remaining - Math.max(0, seconds));
   return { remaining, expired: remaining === 0 };
 };
 

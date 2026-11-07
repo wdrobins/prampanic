@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { applySleep, wakeState } from '../../src/systems/sleepMeter';
+import {
+  applySleep,
+  createSleepMeter,
+  transitionSleepMeter,
+  wakeState
+} from '../../src/systems/sleepMeter';
 
 describe('sleep meter', () => {
   it('drains from hazards and recovers while moving smoothly', () => {
@@ -18,5 +23,14 @@ describe('sleep meter', () => {
     expect(wakeState(30)).toBe('Grunting');
     expect(wakeState(10)).toBe('Awake');
     expect(wakeState(0)).toBe('Crying');
+  });
+
+  it('uses hysteresis so recovery requires crossing the prior threshold plus recovery margin', () => {
+    const grunting = createSleepMeter(44);
+    const recovering = transitionSleepMeter(grunting, 10);
+    const enoughRecovery = transitionSleepMeter(recovering, 13);
+
+    expect(recovering).toMatchObject({ value: 54, state: 'Grunting' });
+    expect(enoughRecovery).toMatchObject({ value: 67, state: 'Stirring' });
   });
 });

@@ -1,0 +1,54 @@
+{
+  "id": "c1-first-walk",
+  "title": "First Walk",
+  "chapter": 1,
+  "luluAge": "Week 2",
+  "mode": "push",
+  "bonus": false,
+  "feedClockSeconds": 90,
+  "feedClockRevealAt": 0,
+  "lengthPx": 9000,
+  "modifiers": { "sleepDrainMultiplier": 1 },
+  "segments": [
+    {
+      "from": 0,
+      "to": 1500,
+      "surface": "footpath",
+      "shade": [{ "x": "left", "from": 400, "to": 900 }]
+    },
+    { "from": 1500, "to": 2400, "surface": "cracked" },
+    { "from": 2400, "to": 2500, "surface": "kerb" },
+    {
+      "from": 2500,
+      "to": 5000,
+      "surface": "footpath",
+      "shade": [{ "x": "right", "from": 3300, "to": 4100 }]
+    },
+    {
+      "from": 5000,
+      "to": 7000,
+      "surface": "cracked",
+      "shade": [{ "x": "left", "from": 5500, "to": 6200 }]
+    },
+    {
+      "from": 7000,
+      "to": 9000,
+      "surface": "footpath",
+      "shade": [{ "x": "right", "from": 7600, "to": 8400 }]
+    }
+  ],
+  "hazards": [
+    { "type": "pothole", "y": 1200, "x": 0.5 },
+    { "type": "kerb", "y": 2450, "x": 0.5 },
+    { "type": "sunPatch", "from": 3000, "to": 3800 },
+    { "type": "magpie", "y": 5200, "triggerDistance": 300 },
+    { "type": "sprinkler", "y": 6400, "x": 0.7 },
+    { "type": "bin", "y": 7000, "x": 0.3 }
+  ],
+  "pickups": [{ "type": "hood", "y": 2900, "x": 0.5 }],
+  "tipId": "tip-sun-safety",
+  "unlocks": ["slot:suspension"],
+  "rewards": { "coffee": 3 },
+  "intro": "First pram walk around the block.",
+  "outro": "Home before the feed!"
+}
