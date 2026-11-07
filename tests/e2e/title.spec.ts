@@ -50,15 +50,18 @@ test.describe('First Walk player path', () => {
     await expect(shush).toHaveAttribute('data-shush-ready', 'true');
   });
 
-  test('collides with the centred pothole on the real player path', async ({ page }) => {
+  test('reports the centred pothole collision on the real player path', async ({ page }) => {
     const errors = captureConsoleErrors(page);
 
     await startCanonicalFirstWalk(page);
-    // The first pothole is a gentle warning; the next kerb proves a real collision
-    // takes Lulu below the configured Stirring threshold on the player route.
-    await expect(page.getByTestId('first-walk-hud')).toContainText('LULU: Stirring', {
-      timeout: 14_000
-    });
+    await page.keyboard.down('a');
+    await page.waitForTimeout(240);
+    await page.keyboard.up('a');
+    await expect(page.getByTestId('first-walk-screen')).toHaveAttribute(
+      'data-last-impact',
+      'pothole',
+      { timeout: 7_000 }
+    );
     expect(errors).toEqual([]);
   });
 

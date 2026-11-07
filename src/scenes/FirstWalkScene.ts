@@ -44,6 +44,7 @@ export class FirstWalkScene extends Phaser.Scene {
   private shushButton?: HTMLButtonElement;
   private paused = false;
   private previousShush = false;
+  private lastImpact?: LevelHazard['type'];
   private hoodRemaining = 0;
   private peekRemaining = 0;
 
@@ -55,6 +56,7 @@ export class FirstWalkScene extends Phaser.Scene {
     this.run = createFirstWalkRun();
     this.paused = false;
     this.previousShush = false;
+    this.lastImpact = undefined;
     this.hoodRemaining = 0;
     this.peekRemaining = 0;
     this.hazards = [];
@@ -229,7 +231,11 @@ export class FirstWalkScene extends Phaser.Scene {
         const collision = collideFirstWalkRun(this.run, scaleFirstWalkSleepDrain(drain));
         this.run = collision.run;
         hazard.collided = collision.applied;
-        if (collision.applied) playFeedback(this, { kind: 'bump', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
+        if (collision.applied) {
+          this.lastImpact = hazard.data.type;
+          if (this.domRoot) this.domRoot.dataset.lastImpact = hazard.data.type;
+          playFeedback(this, { kind: 'bump', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
+        }
       }
     }
     for (const pickup of this.pickups) {
