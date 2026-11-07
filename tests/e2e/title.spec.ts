@@ -54,9 +54,6 @@ test.describe('First Walk player path', () => {
     const errors = captureConsoleErrors(page);
 
     await startCanonicalFirstWalk(page);
-    await page.keyboard.down('a');
-    await page.waitForTimeout(240);
-    await page.keyboard.up('a');
     await expect(page.getByTestId('first-walk-screen')).toHaveAttribute(
       'data-last-impact',
       'pothole',
