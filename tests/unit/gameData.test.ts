@@ -12,7 +12,7 @@ describe('First Walk scene data contract', () => {
     expect(level).toMatchObject({
       id: 'c1-first-walk',
       mode: 'push',
-      feedClockSeconds: 90,
+      feedClockSeconds: 110,
       lengthPx: 9000,
       tipId: 'tip-sun-safety'
     });

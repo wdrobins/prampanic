@@ -5,7 +5,7 @@
   "luluAge": "Week 2",
   "mode": "push",
   "bonus": false,
-  "feedClockSeconds": 90,
+  "feedClockSeconds": 110,
   "feedClockRevealAt": 0,
   "lengthPx": 9000,
   "modifiers": { "sleepDrainMultiplier": 1 },

@@ -5,6 +5,9 @@ import { applySleep } from './sleepMeter';
 
 const level = firstWalkLevel as LevelData;
 
+export const scaleFirstWalkSleepDrain = (drain: number): number =>
+  drain * level.modifiers.sleepDrainMultiplier;
+
 export type FirstWalkRunStatus = 'running' | 'won' | 'lost';
 export type FirstWalkLossReason = 'feedExpired' | 'sleepDepleted';
 export type FirstWalkResult =

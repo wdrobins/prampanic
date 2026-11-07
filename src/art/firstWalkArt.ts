@@ -74,42 +74,36 @@ export const drawFirstWalkHazard = (
   const items: Phaser.GameObjects.GameObject[] = [];
   if (kind === 'pothole')
     items.push(
-      scene.add.ellipse(bounds.x, bounds.y, bounds.width, bounds.height, style.ink),
-      scene.add.ellipse(bounds.x, bounds.y, bounds.width * 0.65, bounds.height * 0.45, style.hazard)
+      scene.add.ellipse(0, 0, bounds.width, bounds.height, style.ink),
+      scene.add.ellipse(0, 0, bounds.width * 0.65, bounds.height * 0.45, style.hazard)
     );
   if (kind === 'kerb')
     items.push(
       scene.add
-        .rectangle(bounds.x, bounds.y, bounds.width, bounds.height, style.hazard)
+        .rectangle(0, 0, bounds.width, bounds.height, style.hazard)
         .setStrokeStyle(style.outlineWidth, style.ink)
     );
   if (kind === 'bin')
     items.push(
       scene.add
-        .rectangle(bounds.x, bounds.y, bounds.width, bounds.height, style.detail)
+        .rectangle(0, 0, bounds.width, bounds.height, style.detail)
         .setStrokeStyle(style.outlineWidth, style.ink),
-      scene.add.rectangle(
-        bounds.x,
-        bounds.y - bounds.height / 2,
-        bounds.width * 1.2,
-        bounds.height / 5,
-        style.ink
-      )
+      scene.add.rectangle(0, -bounds.height / 2, bounds.width * 1.2, bounds.height / 5, style.ink)
     );
   if (kind === 'sprinkler')
     items.push(
       scene.add
-        .circle(bounds.x, bounds.y, bounds.height / 3, style.detail)
+        .circle(0, 0, bounds.height / 3, style.detail)
         .setStrokeStyle(style.outlineWidth, style.ink),
       scene.add
-        .arc(bounds.x, bounds.y, bounds.width / 2, 210, 330, false, style.sun)
+        .arc(0, 0, bounds.width / 2, 210, 330, false, style.sun)
         .setStrokeStyle(style.outlineWidth, style.sun)
     );
   if (kind === 'sun')
     items.push(
       scene.add
-        .circle(bounds.x, bounds.y, bounds.height / 2, style.sun)
+        .circle(0, 0, bounds.height / 2, style.sun)
         .setStrokeStyle(style.outlineWidth, style.ink)
     );
-  return scene.add.container(0, 0, items);
+  return scene.add.container(bounds.x, bounds.y, items);
 };

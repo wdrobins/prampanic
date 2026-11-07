@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
+import { TUNING } from '../../src/config/tuning';
+import firstWalkLevel from '../../src/data/levels/c1-first-walk.json';
 import {
   advanceFirstWalkRun,
   collideFirstWalkRun,
   createFirstWalkRun,
+  scaleFirstWalkSleepDrain,
   shushFirstWalkRun,
   type FirstWalkRun
 } from '../../src/systems/firstWalkRun';
@@ -16,11 +19,15 @@ describe('First Walk run state', () => {
       elapsedSeconds: 0,
       progressPx: 0,
       sleep: 100,
-      feedRemainingSeconds: 90,
+      feedRemainingSeconds: 110,
       shushCooldownRemainingSeconds: 0,
       collisionGraceRemainingSeconds: 0,
       result: null
     });
+  });
+
+  it('uses the level sleep-drain modifier for route hazards and surfaces', () => {
+    expect(scaleFirstWalkSleepDrain(18)).toBe(18 * firstWalkLevel.modifiers.sleepDrainMultiplier);
   });
 
   it('advances elapsed time, forward progress, feed time, and timers together', () => {
@@ -33,7 +40,7 @@ describe('First Walk run state', () => {
     expect(advanceFirstWalkRun(state, { elapsedSeconds: 1, progressPx: 220 })).toMatchObject({
       elapsedSeconds: 1,
       progressPx: 220,
-      feedRemainingSeconds: 89,
+      feedRemainingSeconds: firstWalkLevel.feedClockSeconds - 1,
       shushCooldownRemainingSeconds: 2,
       collisionGraceRemainingSeconds: 0,
       status: 'running'
@@ -73,9 +80,23 @@ describe('First Walk run state', () => {
     });
   });
 
+  it('allows a full smooth route to finish before the configured feed expiry', () => {
+    const smoothRouteSeconds = firstWalkLevel.lengthPx / TUNING.slowSpeed;
+    const run = advanceFirstWalkRun(createFirstWalkRun(), {
+      elapsedSeconds: smoothRouteSeconds,
+      progressPx: firstWalkLevel.lengthPx
+    });
+
+    expect(firstWalkLevel.feedClockSeconds).toBeGreaterThan(smoothRouteSeconds);
+    expect(run).toMatchObject({
+      status: 'won',
+      result: { outcome: 'win', reason: 'routeComplete' }
+    });
+  });
+
   it('loses with a precise reason when the feed clock expires', () => {
     const run = advanceFirstWalkRun(createFirstWalkRun(), {
-      elapsedSeconds: 90,
+      elapsedSeconds: firstWalkLevel.feedClockSeconds,
       progressPx: 100
     });
 

@@ -128,6 +128,7 @@ export class Controls {
     const pointerId = (event as PointerLikeEvent).pointerId;
     this.leftPointers.delete(pointerId);
     this.rightPointers.delete(pointerId);
+    this.pointerInputActive = this.leftPointers.size > 0 || this.rightPointers.size > 0;
     this.updateState();
   };
 

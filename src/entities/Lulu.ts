@@ -31,7 +31,7 @@ export class Lulu {
   public readonly view: Phaser.GameObjects.Container;
   private readonly face: Phaser.GameObjects.Container;
   private readonly presentation: LuluPresentation;
-  private current: LuluFace = 'Sleeping';
+  private current?: LuluFace;
 
   public constructor(scene: Phaser.Scene, x: number, y: number, presentation: LuluPresentation) {
     this.presentation = presentation;
@@ -50,6 +50,7 @@ export class Lulu {
   }
 
   public setWakeState(state: LuluFace): void {
+    if (state === this.current) return;
     this.current = state;
     this.face.removeAll(true);
     const { headRadius, eyeRadius, style } = this.presentation;
@@ -114,7 +115,7 @@ export class Lulu {
   }
 
   public getWakeState(): LuluFace {
-    return this.current;
+    return this.current ?? 'Sleeping';
   }
   public setPosition(x: number, y: number): void {
     this.view.setPosition(x, y);

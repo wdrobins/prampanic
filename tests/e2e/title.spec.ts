@@ -35,6 +35,31 @@ test.describe('First Walk player path', () => {
     expect(errors).toEqual([]);
   });
 
+  test('keeps a DOM steering pointer from activating shush and releases it cleanly', async ({
+    page
+  }) => {
+    await startCanonicalFirstWalk(page);
+    const shush = page.getByTestId('shush-button');
+    const steerRight = page.getByTestId('control-steer-right');
+
+    await steerRight.dispatchEvent('pointerdown', { pointerId: 9, clientX: 300 });
+    await page.waitForTimeout(100);
+    await expect(shush).toHaveAttribute('data-shush-ready', 'true');
+    await steerRight.dispatchEvent('pointerup', { pointerId: 9, clientX: 300 });
+    await page.waitForTimeout(100);
+    await expect(shush).toHaveAttribute('data-shush-ready', 'true');
+  });
+
+  test('collides with the centred pothole on the real player path', async ({ page }) => {
+    const errors = captureConsoleErrors(page);
+
+    await startCanonicalFirstWalk(page);
+    await expect(page.getByTestId('first-walk-hud')).toContainText('LULU: Stirring', {
+      timeout: 7_000
+    });
+    expect(errors).toEqual([]);
+  });
+
   test('exposes two-thumb controls and prevents a second shush during cooldown', async ({
     page
   }) => {

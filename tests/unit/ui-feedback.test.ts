@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   cooldownProgress,
   feedbackPlan,
+  platformPrefersReducedMotion,
   shouldReduceMotion,
   type FeedbackInput
 } from '../../src/ui/feedback';
@@ -28,6 +29,15 @@ describe('run feedback helpers', () => {
     expect(
       feedbackPlan({ kind: 'bump', reducedMotion: false, durationMs: 180, strength: 0.01 })
     ).toEqual({ flash: false, shake: { durationMs: 180, strength: 0.01 }, pulse: false });
+  });
+
+  it('reads the platform reduced-motion media preference when available', () => {
+    expect(
+      platformPrefersReducedMotion((query) => ({
+        matches: query === '(prefers-reduced-motion: reduce)'
+      }))
+    ).toBe(true);
+    expect(platformPrefersReducedMotion(() => ({ matches: false }))).toBe(false);
   });
 
   it('honours an explicit setting before the platform preference', () => {

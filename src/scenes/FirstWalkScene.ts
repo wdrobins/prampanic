@@ -12,11 +12,12 @@ import {
   advanceFirstWalkRun,
   collideFirstWalkRun,
   createFirstWalkRun,
+  scaleFirstWalkSleepDrain,
   shushFirstWalkRun,
   type FirstWalkRun
 } from '../systems/firstWalkRun';
 import { applySleep, wakeState } from '../systems/sleepMeter';
-import { playFeedback } from '../ui/feedback';
+import { platformPrefersReducedMotion, playFeedback } from '../ui/feedback';
 import { DEFAULT_UI_STYLE } from '../ui/components';
 import { ResultsOverlay } from '../ui/ResultsOverlay';
 import { RunHud } from '../ui/RunHud';
@@ -189,7 +190,13 @@ export class FirstWalkScene extends Phaser.Scene {
     const recovery = smooth ? TUNING.meter.recoverPerSecSmooth * deltaSeconds : 0;
     const shadeRecovery = inShade ? TUNING.meter.recoverPerSecShade * deltaSeconds : 0;
     const sunDrain = inSun ? TUNING.meter.sunDrainPerSec * TUNING.firstWalk.hazard.sunDrainMultiplier * deltaSeconds : 0;
-    this.run = { ...this.run, sleep: applySleep(this.run.sleep, recovery + shadeRecovery - surfaceDrain - sunDrain) };
+    this.run = {
+      ...this.run,
+      sleep: applySleep(
+        this.run.sleep,
+        recovery + shadeRecovery - scaleFirstWalkSleepDrain(surfaceDrain) - scaleFirstWalkSleepDrain(sunDrain)
+      )
+    };
   }
 
   private isInShade(segment: LevelData['segments'][number] | undefined): boolean {
@@ -219,10 +226,10 @@ export class FirstWalkScene extends Phaser.Scene {
       const collides = Math.abs(hazard.view.x - this.pram.view.x) < TUNING.firstWalk.hazard.collisionX && Math.abs(hazard.view.y - playerY) < TUNING.firstWalk.hazard.collisionY;
       if (collides && !hazard.collided && hazard.data.type !== 'sunPatch') {
         const drain = hazard.data.type === 'kerb' ? TUNING.meter.bumpByHazard.kerb : TUNING.meter.bumpByHazard.pothole;
-        const collision = collideFirstWalkRun(this.run, drain);
+        const collision = collideFirstWalkRun(this.run, scaleFirstWalkSleepDrain(drain));
         this.run = collision.run;
         hazard.collided = collision.applied;
-        if (collision.applied) playFeedback(this, { kind: 'bump', reducedMotion: false, durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
+        if (collision.applied) playFeedback(this, { kind: 'bump', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
       }
     }
     for (const pickup of this.pickups) {
@@ -269,9 +276,13 @@ export class FirstWalkScene extends Phaser.Scene {
     this.run = outcome.run;
     if (outcome.applied) {
       navigator.vibrate?.(20);
-      playFeedback(this, { kind: 'shush', reducedMotion: false, durationMs: TUNING.firstWalk.feedback.shushDurationMs, strength: 0 });
+      playFeedback(this, { kind: 'shush', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.shushDurationMs, strength: 0 });
       this.updatePresentation();
     }
+  }
+
+  private prefersReducedMotion(): boolean {
+    return platformPrefersReducedMotion(window.matchMedia?.bind(window));
   }
 
   private togglePause(): void {
@@ -286,7 +297,7 @@ export class FirstWalkScene extends Phaser.Scene {
   private showResult(): void {
     if (!this.results || !this.run.result) return;
     const won = this.run.result.outcome === 'win';
-    if (won) playFeedback(this, { kind: 'success', reducedMotion: false, durationMs: TUNING.firstWalk.feedback.successDurationMs, strength: 0 });
+    if (won) playFeedback(this, { kind: 'success', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.successDurationMs, strength: 0 });
     this.results.show({
       headline: won ? 'Home before the feed!' : 'Lulu woke up',
       cause: won ? level.outro : this.run.result.reason === 'feedExpired' ? 'The feed clock ran out.' : 'The bumps were too much.',
@@ -344,9 +355,13 @@ export class FirstWalkScene extends Phaser.Scene {
     button.className = `game-dom-button touch-control ${side}`;
     button.textContent = label;
     button.setAttribute('aria-label', key === 'a' ? 'Steer left' : 'Steer right');
-    button.addEventListener('pointerdown', () => window.dispatchEvent(new KeyboardEvent('keydown', { key })));
-    button.addEventListener('pointerup', () => window.dispatchEvent(new KeyboardEvent('keyup', { key })));
-    button.addEventListener('pointercancel', () => window.dispatchEvent(new KeyboardEvent('keyup', { key })));
+    const forwardKey = (type: 'keydown' | 'keyup') => (event: PointerEvent): void => {
+      event.stopPropagation();
+      window.dispatchEvent(new KeyboardEvent(type, { key }));
+    };
+    button.addEventListener('pointerdown', forwardKey('keydown'));
+    button.addEventListener('pointerup', forwardKey('keyup'));
+    button.addEventListener('pointercancel', forwardKey('keyup'));
     return button;
   }
 

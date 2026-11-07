@@ -30,6 +30,11 @@ export const cooldownProgress = ({ nowMs, readyAtMs, durationMs }: CooldownInput
   return Math.max(0, Math.min(1, (readyAtMs - nowMs) / durationMs));
 };
 
+export type MatchMedia = (query: string) => Pick<MediaQueryList, 'matches'>;
+
+export const platformPrefersReducedMotion = (matchMedia?: MatchMedia): boolean =>
+  matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
 export const shouldReduceMotion = ({
   preference,
   platformPrefersReducedMotion

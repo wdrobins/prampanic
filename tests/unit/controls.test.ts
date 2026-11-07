@@ -50,7 +50,20 @@ describe('Controls', () => {
     target.dispatchEvent(pointer('pointerup', 7, 300));
     expect(controls.state).toMatchObject({ steer: 1, smooth: false, shush: false });
     target.dispatchEvent(pointer('pointerup', 4, 140));
-    expect(controls.state).toMatchObject({ steer: 0, smooth: true, shush: false });
+    expect(controls.state).toMatchObject({ steer: 0, smooth: false, shush: false });
+  });
+
+  it('clears smooth mode when the final drag-shush pointer is released or cancelled', () => {
+    const target = new EventTarget();
+    const controls = new Controls(target, { splitX: 195 }).subscribe();
+
+    target.dispatchEvent(pointer('pointerdown', 1, 80));
+    target.dispatchEvent(pointer('pointerup', 1, 80));
+    expect(controls.state.smooth).toBe(false);
+
+    target.dispatchEvent(pointer('pointerdown', 2, 80));
+    target.dispatchEvent(pointer('pointercancel', 2, 80));
+    expect(controls.state).toMatchObject({ smooth: false, shush: false, steer: 0 });
   });
 
   it('supports left/right touch zones as an alternative steering scheme', () => {
