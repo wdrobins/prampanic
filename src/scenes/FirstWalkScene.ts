@@ -302,8 +302,9 @@ export class FirstWalkScene extends Phaser.Scene {
       headline: won ? 'Home before the feed!' : 'Lulu woke up',
       cause: won ? level.outro : this.run.result.reason === 'feedExpired' ? 'The feed clock ran out.' : 'The bumps were too much.',
       reward: won ? `+${level.rewards.coffee} coffee · Suspension unlocked` : undefined,
-      tipText: levelTip?.text,
-      tipSource: levelTip ? `Source: ${levelTip.source}` : undefined
+      tipText: levelTip?.verified ? levelTip.text : undefined,
+      tipSource: levelTip?.verified ? `Source: ${levelTip.source}` : undefined,
+      tipFooter: levelTip?.verified ? levelTip.footer : undefined
     });
     this.showAccessibleResult(won);
   }
@@ -389,6 +390,11 @@ export class FirstWalkScene extends Phaser.Scene {
     const heading = document.createElement('h2');
     heading.textContent = won ? 'Home before the feed!' : 'Lulu woke up';
     card.append(heading);
+    if (won && levelTip?.verified) {
+      const tip = document.createElement('p');
+      tip.textContent = `${levelTip.title}: ${levelTip.text} Source: ${levelTip.source}. ${levelTip.footer}`;
+      card.append(tip);
+    }
     const retry = document.createElement('button');
     retry.type = 'button';
     retry.dataset.testid = 'result-retry';

@@ -21,6 +21,7 @@ export interface ResultsData {
   reward?: string;
   tipText?: string;
   tipSource?: string;
+  tipFooter?: string;
 }
 export interface ResultsOverlayOptions {
   layout: ResultsLayout;
@@ -101,7 +102,7 @@ export class ResultsOverlay {
       body.setText([data.cause, data.reward].filter(Boolean).join('\n'));
       tip.setText(
         data.tipText
-          ? `${copy.tipHeading}\n${data.tipText}${data.tipSource ? `\n${data.tipSource}` : ''}`
+          ? `${copy.tipHeading}\n${data.tipText}${data.tipSource ? `\n${data.tipSource}` : ''}${data.tipFooter ? `\n${data.tipFooter}` : ''}`
           : ''
       );
       this.root.setVisible(true);

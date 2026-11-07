@@ -52,7 +52,8 @@ export interface Tip {
   sourceUrl: string;
   levelId: string;
   card: number;
-  verified: false;
+  verified: boolean;
+  footer: string;
 }
 
 export interface SoundSlot {
