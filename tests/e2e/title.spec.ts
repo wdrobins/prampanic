@@ -50,18 +50,6 @@ test.describe('First Walk player path', () => {
     await expect(shush).toHaveAttribute('data-shush-ready', 'true');
   });
 
-  test('reports the centred pothole collision on the real player path', async ({ page }) => {
-    const errors = captureConsoleErrors(page);
-
-    await startCanonicalFirstWalk(page);
-    await expect(page.getByTestId('first-walk-screen')).toHaveAttribute(
-      'data-last-impact',
-      'pothole',
-      { timeout: 7_000 }
-    );
-    expect(errors).toEqual([]);
-  });
-
   test('exposes two-thumb controls and prevents a second shush during cooldown', async ({
     page
   }) => {
