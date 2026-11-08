@@ -1,3 +1,4 @@
+import { playStandInSound } from '../audio/standInSounds';
 import { drawFirstWalkHazard, drawFirstWalkPath, drawShadePatch, FIRST_WALK_ART_STYLE } from '../art/firstWalkArt';
 import { PALETTE } from '../art/palette';
 import { TUNING } from '../config/tuning';
@@ -16,6 +17,7 @@ import {
   shushFirstWalkRun,
   type FirstWalkRun
 } from '../systems/firstWalkRun';
+import { routeProgress } from '../systems/routeProgress';
 import { applySleep, wakeState } from '../systems/sleepMeter';
 import { platformPrefersReducedMotion, playFeedback } from '../ui/feedback';
 import { DEFAULT_UI_STYLE } from '../ui/components';
@@ -164,7 +166,8 @@ export class FirstWalkScene extends Phaser.Scene {
       style: DEFAULT_UI_STYLE,
       copy: { feedPrefix: 'Next feed', shushLabel: 'SHHH', pauseLabel: 'Ⅱ' },
       onShush: () => this.requestShush(),
-      onPause: () => this.togglePause()
+      onPause: () => this.togglePause(),
+      showCanvasControls: false
     });
     this.results = new ResultsOverlay(this, {
       layout: TUNING.firstWalk.results,
@@ -229,7 +232,10 @@ export class FirstWalkScene extends Phaser.Scene {
         const collision = collideFirstWalkRun(this.run, scaleFirstWalkSleepDrain(drain));
         this.run = collision.run;
         hazard.collided = collision.applied;
-        if (collision.applied) playFeedback(this, { kind: 'bump', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
+        if (collision.applied) {
+          playStandInSound('bump');
+          playFeedback(this, { kind: 'bump', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.bumpDurationMs, strength: TUNING.firstWalk.feedback.bumpStrength });
+        }
       }
     }
     for (const pickup of this.pickups) {
@@ -238,6 +244,7 @@ export class FirstWalkScene extends Phaser.Scene {
       if (!pickup.collected && Math.abs(pickup.view.x - this.pram.view.x) < TUNING.firstWalk.pickup.collisionX && Math.abs(pickup.view.y - playerY) < TUNING.firstWalk.pickup.collisionY) {
         pickup.collected = true;
         this.hoodRemaining = TUNING.hood.shadeSeconds;
+        playStandInSound('hood');
       }
     }
   }
@@ -259,7 +266,8 @@ export class FirstWalkScene extends Phaser.Scene {
       feedLabel: `Next feed ${Math.ceil(this.run.feedRemainingSeconds / 60)}:${String(Math.ceil(this.run.feedRemainingSeconds % 60)).padStart(2, '0')}`,
       readyAtMs: TUNING.shush.cooldownSec * 1000,
       nowMs: (TUNING.shush.cooldownSec - this.run.shushCooldownRemainingSeconds) * 1000,
-      cooldownMs: TUNING.shush.cooldownSec * 1000
+      cooldownMs: TUNING.shush.cooldownSec * 1000,
+      routeProgress: routeProgress(this.run.progressPx, level.lengthPx)
     });
     if (this.hudCopy) this.hudCopy.textContent = `LULU: ${state} · Next feed ${Math.ceil(this.run.feedRemainingSeconds / 60)}:${String(Math.ceil(this.run.feedRemainingSeconds % 60)).padStart(2, '0')}`;
     if (this.shushButton) {
@@ -275,6 +283,7 @@ export class FirstWalkScene extends Phaser.Scene {
     const outcome = shushFirstWalkRun(this.run);
     this.run = outcome.run;
     if (outcome.applied) {
+      playStandInSound('shush');
       navigator.vibrate?.(20);
       playFeedback(this, { kind: 'shush', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.shushDurationMs, strength: 0 });
       this.updatePresentation();
@@ -297,7 +306,12 @@ export class FirstWalkScene extends Phaser.Scene {
   private showResult(): void {
     if (!this.results || !this.run.result) return;
     const won = this.run.result.outcome === 'win';
-    if (won) playFeedback(this, { kind: 'success', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.successDurationMs, strength: 0 });
+    if (won) {
+      playStandInSound('win');
+      playFeedback(this, { kind: 'success', reducedMotion: this.prefersReducedMotion(), durationMs: TUNING.firstWalk.feedback.successDurationMs, strength: 0 });
+    } else {
+      playStandInSound('loss');
+    }
     this.results.show({
       headline: won ? 'Home before the feed!' : 'Lulu woke up',
       cause: won ? level.outro : this.run.result.reason === 'feedExpired' ? 'The feed clock ran out.' : 'The bumps were too much.',
@@ -357,12 +371,15 @@ export class FirstWalkScene extends Phaser.Scene {
     button.textContent = label;
     button.setAttribute('aria-label', key === 'a' ? 'Steer left' : 'Steer right');
     const forwardKey = (type: 'keydown' | 'keyup') => (event: PointerEvent): void => {
+      event.preventDefault();
       event.stopPropagation();
+      if (type === 'keydown') button.setPointerCapture?.(event.pointerId);
       window.dispatchEvent(new KeyboardEvent(type, { key }));
     };
     button.addEventListener('pointerdown', forwardKey('keydown'));
     button.addEventListener('pointerup', forwardKey('keyup'));
     button.addEventListener('pointercancel', forwardKey('keyup'));
+    button.addEventListener('lostpointercapture', forwardKey('keyup'));
     return button;
   }
 

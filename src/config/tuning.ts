@@ -32,6 +32,9 @@ export const TUNING = {
     hud: {
       padding: 16,
       top: 18,
+      progressTop: 72,
+      progressWidth: 168,
+      progressHeight: 12,
       shushX: 336,
       shushY: 744,
       shushDiameter: 76,

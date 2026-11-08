@@ -38,6 +38,9 @@ body,
   box-shadow: 0 4px 0 #1b1b1f;
   color: #1b1b1f;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   font:
     bold 14px Arial,
     sans-serif;
